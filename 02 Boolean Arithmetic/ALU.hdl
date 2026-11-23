@@ -1,0 +1,69 @@
+// This file is part of nand2tetris, as taught in The Hebrew University, and
+// was written by Aviv Yaish. It is an extension to the specifications given
+// [here](https://www.nand2tetris.org) (Shimon Schocken and Noam Nisan, 2017),
+// as allowed by the Creative Common Attribution-NonCommercial-ShareAlike 3.0
+// Unported [License](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+// File name: projects/02/ALU.hdl
+
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+    // and   
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+    // You're advised to work on the ALU chip in two steps:
+    // - First, without handling status outputs (ALU-nostat)
+    // - Then, adding the missing functionality for the "full" chip (ALU). 
+    // You only need to submit the "full" ALU, no need to submit the partial
+    // implementation (ALU-nostat).
+    // Put your code here:
+    Mux16(a=x, b=false, sel=zx, out=xZero);
+
+    Not16(in=xZero, out=xNot);
+    Mux16(a=xZero, b=xNot, sel=nx, out=xFinal);
+
+    Mux16(a=y, b=false, sel=zy, out=yZero);
+
+    Not16(in=yZero, out=yNot);
+    Mux16(a=yZero, b=yNot, sel=ny, out=yFinal);
+
+    Add16(a=xFinal, b=yFinal, out=sumXY);
+    And16(a=xFinal, b=yFinal, out=XAndY);
+    Mux16(a=XAndY, b=sumXY, sel=f, out=andOrSum);
+
+    Not16(in=andOrSum, out=notAndOrSum);
+    Mux16(a=andOrSum, b=notAndOrSum, sel=no,
+          out=out,
+          out[0..7]=part1,
+          out[8..15]=part2,
+          out[15]=ng);
+
+    // Check if output is zero
+    Or8Way(in=part1, out=r1);
+    Or8Way(in=part2, out=r2);
+    Or(a=r1, b=r2, out=r3);
+    Not(in=r3, out=zr);
+}
