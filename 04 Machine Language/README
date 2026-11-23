@@ -1,0 +1,13 @@
+# Project 04-Machine Language
+
+This project introduces programming in Hack Assembly.
+
+It includes three programs:
+- **Mult:** Performs multiplication.
+- **Fill:** Changes screen pixels based on keyboard input.
+- **Swap:** Exchanges values in memory.
+
+The project demonstrates how low-level instructions interact directly with registers, memory, and hardware.
+
+Language: Hack Assembly  
+Tool: CPU Emulator
