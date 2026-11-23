@@ -1,0 +1,10 @@
+# Project 02-Boolean Arithmetic
+
+This project implements arithmetic circuits using the logic gates developed in Project 01.
+
+The main components include HalfAdder, FullAdder, Add16, Inc16, ShiftLeft, ShiftRight, and the Arithmetic Logic Unit (ALU).
+
+The ALU performs arithmetic and logical operations on 16-bit values using control signals.
+
+Language: HDL  
+Tool: Hardware Simulator
