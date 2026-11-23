@@ -1,0 +1,10 @@
+# Project 03-Sequential Logic
+
+This project focuses on building memory components capable of storing data over time.
+
+Starting with a single Bit register, the project progressively constructs larger memory units, including RAM8, RAM64, RAM512, RAM4K, and RAM16K.
+
+It also implements a Program Counter (PC) to manage instruction addresses.
+
+Language:HDL  
+Tool:Hardware Simulator
