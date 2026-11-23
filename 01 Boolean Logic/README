@@ -1,0 +1,10 @@
+# Project 01-Boolean Logic
+
+This project focuses on building basic logic gates using only NAND gates.
+
+Implemented gates include NOT, AND, OR, XOR, multiplexers, demultiplexers, and their multi-bit versions.
+
+The goal is to understand Boolean algebra and how simple gates can be combined to create more complex digital circuits.
+
+Language: HDL  
+Tool: Hardware Simulator
